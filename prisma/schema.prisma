@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                 @id @default(autoincrement())
+  username          String              @unique
+  email             String              @unique
+  hashedPassword    String
+  bio               String?
+  profilePicture    String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  posts             Post[]
+  AuditLog          AuditLog[]
+  EngagementMetrics EngagementMetrics[]
+
+  followers         Follow[]            @relation("followerRelation")
+  following         Follow[]            @relation("followingRelation")
+}
+
+model Follow {
+  followerId Int
+  followedId Int
+  createdAt  DateTime @default(now())
+
+  follower User @relation("followerRelation", fields: [followerId], references: [id])
+  followed User @relation("followingRelation", fields: [followedId], references: [id])
+
+  @@id([followerId, followedId])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  likeCount Int      @default(0)
+
+  user           User             @relation(fields: [userId], references: [id])
+  PostPopularity PostPopularity[]
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  action    String
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model EngagementMetrics {
+  id                     Int      @id @default(autoincrement())
+  userId                 Int
+  averageLikesPerPost    Float    @default(0.0)
+  averageCommentsPerPost Float    @default(0.0)
+  engagementRate         Float    @default(0.0000)
+  createdAt              DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model PostPopularity {
+  id             Int      @id @default(autoincrement())
+  postId         Int
+  viralityScore  Float    @default(0.0000)
+  engagementRate Float    @default(0.0000)
+  createdAt      DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id])
+}

@@ -1,0 +1,25 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.markdown-preview h1 {
+    @apply text-3xl font-bold mt-4 mb-2;
+}
+.markdown-preview h2 {
+    @apply text-2xl font-semibold mt-3 mb-2;
+}
+.markdown-preview h3 {
+    @apply text-xl font-medium mt-3 mb-2;
+}
+.markdown-preview p {
+    @apply mt-2 mb-4;
+}
+.markdown-preview ul {
+    @apply list-disc list-inside mt-2 mb-4;
+}
+.markdown-preview ol {
+    @apply list-decimal list-inside mt-2 mb-4;
+}
+.markdown-preview a {
+    @apply text-blue-400 hover:underline;
+}
