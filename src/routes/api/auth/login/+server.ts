@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import { JWT_SECRET } from "$env/static/private";
 import { setCookie } from "@src/lib/util/cookie";
+import { writeAuditLog } from "@src/lib/util/auditLogUtil";
 
 export async function POST({ request, cookies, locals }) {
     try {
@@ -33,11 +34,13 @@ export async function POST({ request, cookies, locals }) {
                 id: existingUser.id,
                 username: existingUser.username,
                 email: existingUser.email,
+                role: existingUser.role
             },
             JWT_SECRET,
             { expiresIn: '1h' }
         );
 
+        writeAuditLog(existingUser.id, `User logged in.`)
         setCookie(cookies, 'token', token);
         return json({
             success: true, token, user: {

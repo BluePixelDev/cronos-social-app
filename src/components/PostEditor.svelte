@@ -1,7 +1,7 @@
 <script lang="ts">
     import { marked } from "marked";
     import SubmitButton from "./SubmitButton.svelte";
-    import CancelButton from "./CancelButton.svelte";
+    import CancelButton from "./buttons/CancelButton.svelte";
 
     let {
         postContent,
@@ -13,7 +13,7 @@
 
 <!-- Absolute wrapper -->
 <div
-    class="flex flex-col absolute top-0 bottom-0 right-0 left-0 items-center p-8 bg-black bg-opacity-60 z-20"
+    class="flex flex-col absolute top-0 bottom-0 right-0 left-0 items-center p-8 bg-black bg-opacity-60 z-20 max-h-screen"
 >
     <div
         class="flex flex-col bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-3xl h-4/5"

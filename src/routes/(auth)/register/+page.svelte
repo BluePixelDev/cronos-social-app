@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import SubmitButton from "@src/components/SubmitButton.svelte";
-    import { register } from "@src/lib/util/authUtil";
+    import { register } from "@src/lib/util/requstUtil";
 
     let username = "";
     let email = "";

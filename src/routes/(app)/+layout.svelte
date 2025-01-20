@@ -1,27 +1,31 @@
 <script lang="ts">
+    import { invalidateAll } from "$app/navigation";
     import PostEditor from "@src/components/PostEditor.svelte";
-    import Header from "@components/Header.svelte";
-    import Sidebar from "@src/components/LayoutSidebar.svelte";
+    import Header from "@src/components/layout/Header.svelte";
+    import Sidebar from "@src/components/layout/LayoutSidebar.svelte";
+    import { post } from "@src/lib/util/requstUtil.js";
     import { isPostEditorOpen } from "@stores/postEditorStore";
-    import { post } from "@util/postUtil";
 
     let { children, data } = $props();
 
-    let isOpen = $state(false)
+    let isOpen = $state(false);
     isPostEditorOpen.subscribe((state) => {
         isOpen = state;
-    })
+    });
 
     const handleEditorClose = () => {
-        isPostEditorOpen.set(false)
-    }
+        isPostEditorOpen.set(false);
+    };
 
-    const handlePostSubmit = (content: string) => {
-        if(data.isAuthenticated && data.user){
-            post(content, data.user?.id)
-            isPostEditorOpen.set(false)
+    const handlePostSubmit = async (content: string) => {
+        if (data.isAuthenticated && data.user) {
+            const newPost = await post(content);
+            if (newPost && newPost.success === true) {
+                await invalidateAll();
+            }
+            isPostEditorOpen.set(false);
         }
-    }
+    };
 </script>
 
 <div class="flex flex-col min-h-screen bg-background">
@@ -30,7 +34,12 @@
         <Sidebar {data} />
         <div class="flex flex-col flex-1 relative">
             {#if isOpen}
-                <PostEditor onCancel={handleEditorClose} data={data} postContent="" onSubmit={handlePostSubmit}/>
+                <PostEditor
+                    onCancel={handleEditorClose}
+                    {data}
+                    postContent=""
+                    onSubmit={handlePostSubmit}
+                />
             {/if}
             <!-- Header -->
             <Header />

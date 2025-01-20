@@ -1,8 +1,10 @@
 import 'jsonwebtoken';
 
 type User = {
-	id: number,
+	id: number
 	username: string
+	email: string
+	role: string
 }
 
 declare global {
@@ -28,8 +30,10 @@ declare global {
 
 declare module "jsonwebtoken" {
 	export interface JwtPayload {
-		id: string;
+		id: number
 		username: string
+		email: string
+		role: string
 	}
 }
 

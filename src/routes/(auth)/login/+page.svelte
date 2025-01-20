@@ -1,8 +1,8 @@
 <script lang="ts">
     import SubmitButton from "@components/SubmitButton.svelte";
     import { goto } from "$app/navigation";
-    import { login } from "@src/lib/util/authUtil";
     import Error from "@src/routes/+error.svelte";
+    import { login } from "@src/lib/util/requstUtil";
 
     let identifier = "";
     let password = "";

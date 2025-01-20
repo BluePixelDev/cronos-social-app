@@ -1,0 +1,29 @@
+[
+    {
+        "username": "johndoe",
+        "email": "johndoe@example.com",
+        "hashedPassword": "hashedpassword1",
+        "bio": "Hello, I'm John!",
+        "profilePicture": "https://example.com/profile/johndoe.jpg",
+        "followCount": 150,
+        "role": "USER"
+    },
+    {
+        "username": "janedoe",
+        "email": "janedoe@example.com",
+        "hashedPassword": "hashedpassword2",
+        "bio": "I love coding and coffee.",
+        "profilePicture": "https://example.com/profile/janedoe.jpg",
+        "followCount": 120,
+        "role": "USER"
+    },
+    {
+        "username": "adminuser",
+        "email": "adminuser@example.com",
+        "hashedPassword": "hashedpassword3",
+        "bio": "Admin user with full permissions.",
+        "profilePicture": "https://example.com/profile/adminuser.jpg",
+        "followCount": 300,
+        "role": "ADMIN"
+    }
+]

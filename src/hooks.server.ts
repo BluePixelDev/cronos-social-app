@@ -4,14 +4,13 @@ import jwt, { type JwtPayload } from "jsonwebtoken"
 
 export const handle: Handle = async ({ event, resolve }) => {
     const token = event.cookies.get('token');
-    
+
     if (token) {
         try {
             const user = jwt.verify(token, JWT_SECRET) as JwtPayload;
-            console.log(user)
-            event.locals.user = { id: user.id, username: user.username };
+            event.locals.user = { id: user.id, username: user.username, email: user.email, role: user.role };
         } catch (err) {
-            event.locals.user = null;
+            event.locals.user = null; 
         }
     } else {
         event.locals.user = null;

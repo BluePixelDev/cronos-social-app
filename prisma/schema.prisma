@@ -14,21 +14,31 @@ datasource db {
 }
 
 model User {
-  id                Int                 @id @default(autoincrement())
-  username          String              @unique
-  email             String              @unique
-  hashedPassword    String
-  bio               String?
-  profilePicture    String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  
+  id             Int      @id @default(autoincrement())
+  username       String   @unique
+  email          String   @unique
+  hashedPassword String
+  bio            String?
+  profilePicture String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  followCount Int         @default(0)
+
+  role Role @default(USER)
+
   posts             Post[]
+  likes             Like[]
   AuditLog          AuditLog[]
   EngagementMetrics EngagementMetrics[]
 
-  followers         Follow[]            @relation("followerRelation")
-  following         Follow[]            @relation("followingRelation")
+  followers Follow[] @relation("followerRelation")
+  following Follow[] @relation("followingRelation")
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
 }
 
 model Follow {
@@ -52,6 +62,18 @@ model Post {
 
   user           User             @relation(fields: [userId], references: [id])
   PostPopularity PostPopularity[]
+  likes          Like[]
+}
+
+model Like {
+  userId    Int
+  postId    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
 }
 
 model AuditLog {

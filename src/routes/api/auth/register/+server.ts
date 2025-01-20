@@ -1,11 +1,12 @@
 import prisma from '@lib/prisma';
+import { writeAuditLog } from '@src/lib/util/auditLogUtil';
 import { setCookie } from '@src/lib/util/cookie';
 import { json } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'FALLBACK_TESTING_KEY';
-export async function POST({ request, cookies, locals }) {
+export async function POST({ request, cookies }) {
     try {
         const { username, email, password } = await request.json();
 
@@ -30,6 +31,7 @@ export async function POST({ request, cookies, locals }) {
                 username,
                 email,
                 hashedPassword,
+                followCount: 0
             },
         });
 
@@ -38,11 +40,13 @@ export async function POST({ request, cookies, locals }) {
                 id: user.id,
                 username: user.username,
                 email: user.email,
+                role: user.role
             },
             JWT_SECRET,
             { expiresIn: '1h' }
         );
 
+        writeAuditLog(user.id, `New user registered`)
         setCookie(cookies, 'token', token);
         return json({
             success: true, token, user: {

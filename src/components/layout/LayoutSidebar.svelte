@@ -1,8 +1,8 @@
 <script lang="ts">
     import { isPostEditorOpen } from "@stores/postEditorStore";
-    import { logout } from "@src/lib/util/authUtil";
-    import SideBarButton from "./SideBarButton.svelte";
+    import SideBarButton from "./LayoutSideBarButton.svelte";
     import { goto } from "$app/navigation";
+    import { logout } from "@src/lib/util/requstUtil";
     let { data } = $props();
 
     const handleNewPost = () => {
@@ -28,21 +28,23 @@
 
             <!-- Show Profile and Advanced Links Only If Authenticated -->
             {#if data.isAuthenticated}
-                <SideBarButton goto="/profile">👤 Profile</SideBarButton>
+                <SideBarButton goto="/user/{data.user.username}">👤 Profile</SideBarButton>
             {/if}
         </nav>
     </div>
 
-    <!-- Bottom Section: Settings & Logout -->
+    <!-- Bottom Section: Logout -->
     <div>
         <nav class="space-y-4">
             <!-- Show Settings and Logout Only If Authenticated -->
             {#if data.isAuthenticated}
-                <SideBarButton goto="/settings">⚙️ Settings</SideBarButton>
                 <SideBarButton onClick={logout}>🚪 Logout</SideBarButton>
             {:else}
                 <SideBarButton goto="/login">📌 Login</SideBarButton>
             {/if}
         </nav>
+
+        <p class="text-[12px]">Made by Ondrej Kacirek</p>
+        <a  class="text-[12px] text-blue-300" href="https://github.com/BluePixelDev/cronos-social-app/issues">Report issue</a>
     </div>
 </div>
