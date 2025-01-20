@@ -1,8 +1,5 @@
 import { json } from "@sveltejs/kit";
-import path from "path";
-import fs from "fs"
 import prisma from "@src/lib/prisma";
-import { use } from "marked";
 
 export async function POST({ request, locals }) {
     if (!locals.user || locals.user.role != "ADMIN") {

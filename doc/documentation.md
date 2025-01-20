@@ -24,12 +24,18 @@ JWT_SECRET=<SUPER_SECRET_TOKEN>
 # Database
 DATABASE_URL="<databse-engine>://<password>:<username>@<host>:<port>/<database>"
 DEFAULT_TRANSACTION_ISOLATION="READ COMMITTED"
+HOST=127.0.0.1
+ORIGIN=http://127.0.0.1:3000
 
 ```
 #### Explanation:
 - ``JWT_SECRET`` is a string used for authorization and authentication (Very important to set it)
 - ``DATABASE_URL`` is a mysql connection string used by ORM for connecting.
 -``DEFAULT_TRANSACTION_ISOLATION`` changes how transactions are isolated throughout the application
+
+// BUILDING //
+- ``HOST`` - so that the svelte knows where it is hosted
+` ``ORIGIN`` - used to prevent cross site requests
 
 ## Runnning
 First thing first you must migrate the database.
