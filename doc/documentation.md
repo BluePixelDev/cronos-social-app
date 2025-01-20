@@ -52,6 +52,7 @@ In order to export information user has to have the role of ``ADMIN`` and must g
 - JsonWebToken (JWT)
 - Taiwlind (Styles)
 - Marked (MArkdown)
+- Iconify (SVG icons)
 
 ## Sources
 

@@ -71,7 +71,7 @@ export async function DELETE({ request, locals }) {
                     }
                 }
             })
-        ])
+        ],)
 
         return json({ success: true, data: like });
     } catch (error) {
