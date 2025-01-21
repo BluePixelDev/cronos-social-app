@@ -14,9 +14,8 @@ export function setCookie(
     maxAge: number = 3600 // Default: 1 hour
 ) {
     cookies.set(name, value, {
-        httpOnly: true,    // Prevent client-side access
         maxAge,            // Lifetime in seconds
-        secure: true,      // Use HTTPS in production
+        secure: false,      // Use HTTPS in production
         path: '/',         // Make cookie accessible site-wide
         sameSite: 'strict' // Prevent cross-site request forgery
     });
@@ -29,8 +28,7 @@ export function setCookie(
  */
 export function clearCookie(cookies: Cookies, name: string) {
     cookies.set(name, '', {
-        httpOnly: true,
-        maxAge: 0,  // Expire the cookie immediately
+        maxAge: 0,
         path: '/'
     });
 }
