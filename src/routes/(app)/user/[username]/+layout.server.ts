@@ -13,7 +13,7 @@ export const load = async ({ params, locals }) => {
                 profilePicture: true,
                 followers: {
                     where: {
-                        followedId: locals.user?.id
+                        followerId: locals.user?.id
                     },
                     select: {
                         followerId: true
