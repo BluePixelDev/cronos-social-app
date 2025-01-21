@@ -11,13 +11,14 @@ export function setCookie(
     cookies: Cookies,
     name: string,
     value: string,
+    secure: false,
     maxAge: number = 3600 // Default: 1 hour
 ) {
     cookies.set(name, value, {
-        maxAge,            // Lifetime in seconds
-        secure: false,      // Use HTTPS in production
-        path: '/',         // Make cookie accessible site-wide
-        sameSite: 'strict' // Prevent cross-site request forgery
+        secure: false,
+        maxAge,            
+        path: '/',         
+        sameSite: 'strict' 
     });
 }
 
