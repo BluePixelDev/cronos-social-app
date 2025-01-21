@@ -29,6 +29,7 @@ export function setCookie(
  */
 export function clearCookie(cookies: Cookies, name: string) {
     cookies.set(name, '', {
+        secure: false,
         maxAge: 0,
         path: '/'
     });
