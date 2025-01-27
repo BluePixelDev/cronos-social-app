@@ -19,7 +19,6 @@
 -- Table structure for table `AuditLog`
 --
 
-BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS `AuditLog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -344,6 +343,18 @@ SET character_set_client = @saved_cs_client;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-01-20 21:37:56
-
-COMMIT;
-END;
+CREATE VIEW PostScores AS
+SELECT 
+    p.id,
+    p.content,
+    p.createdAt,
+    p.updatedAt,
+    p.likeCount,
+    u.id as userId,
+    u.username,
+    pp.viralityScore,
+    pp.engagementRate,
+    (pp.viralityScore + pp.engagementRate) * EXP(-((UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(p.createdAt)) / 86400.0 / 2.0)) AS score
+FROM `Post` p
+LEFT JOIN `PostPopularity` pp ON pp.`postId` = p.id
+LEFT JOIN `User` u ON p.userId = u.id;

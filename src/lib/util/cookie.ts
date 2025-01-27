@@ -11,14 +11,14 @@ export function setCookie(
     cookies: Cookies,
     name: string,
     value: string,
+    secure: false,
     maxAge: number = 3600 // Default: 1 hour
 ) {
     cookies.set(name, value, {
-        httpOnly: true,    // Prevent client-side access
-        maxAge,            // Lifetime in seconds
-        secure: true,      // Use HTTPS in production
-        path: '/',         // Make cookie accessible site-wide
-        sameSite: 'strict' // Prevent cross-site request forgery
+        secure: false,
+        maxAge,            
+        path: '/',         
+        sameSite: 'strict' 
     });
 }
 
@@ -29,8 +29,8 @@ export function setCookie(
  */
 export function clearCookie(cookies: Cookies, name: string) {
     cookies.set(name, '', {
-        httpOnly: true,
-        maxAge: 0,  // Expire the cookie immediately
+        secure: false,
+        maxAge: 0,
         path: '/'
     });
 }
