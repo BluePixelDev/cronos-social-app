@@ -13,6 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
 model User {
   id             Int      @id @default(autoincrement())
   username       String   @unique
@@ -31,14 +37,8 @@ model User {
   AuditLog          AuditLog[]
   EngagementMetrics EngagementMetrics[]
 
-  followers Follow[] @relation("followerRelation")
-  following Follow[] @relation("followingRelation")
-}
-
-enum Role {
-  USER
-  MODERATOR
-  ADMIN
+  // Follow relationships
+  following Follow[] @relation("followRelation") // Users this user follows
 }
 
 model Follow {
@@ -46,8 +46,8 @@ model Follow {
   followedId Int
   createdAt  DateTime @default(now())
 
-  follower User @relation("followerRelation", fields: [followerId], references: [id])
-  followed User @relation("followingRelation", fields: [followedId], references: [id])
+  // Relations to User model
+  followed User @relation("followRelation", fields: [followedId], references: [id])
 
   @@id([followerId, followedId])
 }

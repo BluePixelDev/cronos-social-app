@@ -34,7 +34,7 @@ export async function POST({ request, locals }) {
                 }
             })
         ])
-
+        
         return json({ success: true });
     } catch (error) {
         if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {

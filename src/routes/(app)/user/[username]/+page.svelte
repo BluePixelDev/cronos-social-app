@@ -38,70 +38,77 @@
     };
 </script>
 
-<div
-    class="flex flex-col items-center p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
->
-    <!-- Profile Picture -->
-    <div
-        class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-white text-3xl font-bold"
-    >
+<div class="flex flex-col items-center p-8 rounded-lg shadow-lg bg-white w-full max-w-md mx-auto">
+    <!-- Profile Picture Container with subtle border -->
+    <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
         {#if profileData?.profilePicture}
             <!-- svelte-ignore a11y_img_redundant_alt -->
             <img
                 src={profileData.profilePicture}
                 alt="Profile picture"
-                class="w-full h-full rounded-full object-cover"
+                class="w-full h-full object-cover"
             />
         {:else}
-            {profileData.username[0].toUpperCase()}
+            <div class="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-4xl font-bold">
+                {profileData.username[0].toUpperCase()}
+            </div>
         {/if}
     </div>
 
-    <!-- User Info -->
-    <h1 class="text-2xl font-semibold mt-4">
+    <!-- User Info with improved typography -->
+    <h1 class="text-3xl font-bold mt-6 text-gray-800">
         {profileData?.username || "Unknown User"}
     </h1>
 
-    <!-- Editable Bio -->
+    <!-- Followers count with better visual hierarchy -->
+    <p class="text-blue-600 font-medium text-sm mt-2">
+        {followCount} Followers
+    </p>
+
+    <!-- Editable Bio with improved styling -->
     {#if isOwnProfile && isEditingBio}
-        <textarea
-            class="mt-2 w-full p-2 border text-black rounded-md"
-            bind:value={bio}
-        ></textarea>
-        <div class="flex space-x-2 mt-2">
-            <button
-                class="px-4 py-2 bg-green-600 text-white rounded-md shadow hover:bg-green-700 transition"
-                onclick={saveBio}
-            >
-                Save
-            </button>
-            <button
-                class="px-4 py-2 bg-gray-400 text-white rounded-md shadow hover:bg-gray-500 transition"
-                onclick={() => (isEditingBio = false)}
-            >
-                Cancel
-            </button>
+        <div class="w-full mt-4">
+            <textarea
+                class="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                bind:value={bio}
+                rows="3"
+                placeholder="Write something about yourself..."
+            ></textarea>
+            <div class="flex space-x-3 mt-3">
+                <button
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 transition-colors font-medium"
+                    onclick={saveBio}
+                >
+                    Save
+                </button>
+                <button
+                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg shadow-sm hover:bg-gray-300 transition-colors font-medium"
+                    onclick={() => (isEditingBio = false)}
+                >
+                    Cancel
+                </button>
+            </div>
         </div>
     {:else}
-        <p class="text-gray-600 text-sm mt-2">
-            {profileData?.bio || "No bio available"}
-            {#if isOwnProfile}
-                <button
-                    class="ml-2 text-blue-600 hover:underline"
-                    onclick={() => (isEditingBio = true)}
-                >
-                    Edit
-                </button>
-            {/if}
-        </p>
+        <div class="mt-4 text-center px-4">
+            <p class="text-gray-700 leading-relaxed">
+                {profileData?.bio || "No bio available"}
+                {#if isOwnProfile}
+                    <button
+                        class="ml-2 text-blue-600 hover:text-blue-700 hover:underline font-medium transition-colors"
+                        onclick={() => (isEditingBio = true)}
+                    >
+                        Edit
+                    </button>
+                {/if}
+            </p>
+        </div>
     {/if}
 
-    <p class="text-gray-500 text-sm mt-1">Followers: {followCount}</p>
-
-    <!-- Follow Button -->
+    <!-- Follow Button with improved styling -->
     {#if !isOwnProfile}
         <button
-            class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+            class="mt-6 px-8 py-2.5 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all transform hover:scale-105 font-medium"
             onclick={toggleFollow}
         >
             {isFollowing ? "Unfollow" : "Follow"}

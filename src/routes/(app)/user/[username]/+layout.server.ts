@@ -11,14 +11,14 @@ export const load = async ({ params, locals }) => {
                 bio: true,
                 followCount: true,
                 profilePicture: true,
-                followers: {
-                    where: {
-                        followedId: locals.user?.id
-                    },
+                following:{
                     select: {
-                        followerId: true
+                        followerId: true,
+                    },
+                    where: {
+                        followerId: locals.user?.id ?? -1 
                     }
-                },
+                }
             },
         }
     )
@@ -30,7 +30,7 @@ export const load = async ({ params, locals }) => {
     return {
         profileData: {
             ...profileData,
-            isFollowed: profileData.followers.length > 0
+            isFollowed: profileData.following.length > 0
         }
     };
 };

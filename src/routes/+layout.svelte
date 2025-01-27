@@ -5,11 +5,3 @@
 </script>
 
 {@render children()}
-
-<style lang="postcss">
-    :global(html) {
-        color: white;
-        font-family: theme(fontFamily.code);
-        background-color: theme(colors.background)
-    }
-</style>

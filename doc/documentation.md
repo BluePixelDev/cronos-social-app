@@ -37,6 +37,11 @@ ORIGIN=http://127.0.0.1:3000
 - ``HOST`` - so that the svelte knows where it is hosted
 ` ``ORIGIN`` - used to prevent cross site requests
 
+After that to commense the build process run this command:
+```js
+node -r dotenv/config build
+```
+
 ## Runnning
 First thing first you must migrate the database.
 ```js
@@ -51,13 +56,14 @@ npm run dev
 In order to export information user has to have the role of ``ADMIN`` and must got to /admin where a button generating small report is located.
 
 ## Used Libraries
+- Typescript
 - Prisma (ORM)
 - Mysql2 (Mysql connector for orm)
 - Sveltekit (Web Application JS Framework)
 - Bcryptjs (Encryption)
 - JsonWebToken (JWT)
 - Taiwlind (Styles)
-- Marked (MArkdown)
+- Marked (Markdown)
 - Iconify (SVG icons)
 
 ## Sources
@@ -80,3 +86,6 @@ https://tailwindcss.com/docs/customizing-colors
 https://tailwindcss.com/docs/font-family
 https://tailwindcss.com/docs/border-color
 https://tailwindcss.com/docs/border-color
+
+### JWT
+https://jwt.io/introduction

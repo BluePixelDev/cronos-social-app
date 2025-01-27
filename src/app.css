@@ -23,3 +23,9 @@
 .markdown-preview a {
     @apply text-blue-400 hover:underline;
 }
+
+html {
+    color: white;
+    font-family: theme(fontFamily.code);
+    background-color: theme(colors.background)
+}
